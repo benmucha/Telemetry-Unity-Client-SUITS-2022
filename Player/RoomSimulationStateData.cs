@@ -102,7 +102,13 @@ public class RoomSimulationStateData
     /// </summary>
     [JsonProperty("p_h2o_l")]
     public float H2OLiquidPressure { get; set; }
-    
+
+    /// <summary>
+    /// Pressure inside the Secondary Oxygen Pack. Expected range is from ? to ? psia.
+    /// </summary>
+    [JsonProperty("p_sop")]
+    public float SOPPressure { get; set; }
+
     /// <summary>
     /// Flowrate of the Secondary Oxygen Pack. Expected range is from 0.5 to 1 psi/min.
     /// </summary>
