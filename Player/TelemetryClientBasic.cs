@@ -1,4 +1,5 @@
 using System;
+using RISD.SuitsTelemetryClient.Data;
 using UnityEngine;
 
 public class TelemetryClientBasic : MonoBehaviour
@@ -32,6 +33,7 @@ public class TelemetryClientBasic : MonoBehaviour
     private static void OnReceiveSimulationState(RoomSimulationStateData simulationStateRoom)
     {
         Debug.Log($"output: {simulationStateRoom.ID} - {simulationStateRoom.WaterTimeLeft}");
+        Debug.Log($"test: " + simulationStateRoom.SubPressure.Percent);
     }
     
     private static void OnApiError(Exception e)
