@@ -25,7 +25,7 @@ namespace RISD.SuitsTelemetryClient.Data
 
     public class SuitPressure : Pressure
     {
-        public override float Min => 2;
+        public override float Min => 0;
         public override float Max => 4;
 
         public SuitPressure(float value) : base(value)
@@ -35,7 +35,7 @@ namespace RISD.SuitsTelemetryClient.Data
 
     public class H2OGasPressure : Pressure
     {
-        public override float Min => 14;
+        public override float Min => 0;
         public override float Max => 16;
 
         public H2OGasPressure(float value) : base(value)
@@ -45,7 +45,7 @@ namespace RISD.SuitsTelemetryClient.Data
 
     public class H2OLiquidPressure : Pressure
     {
-        public override float Min => 14;
+        public override float Min => 0;
         public override float Max => 16;
 
         public H2OLiquidPressure(float value) : base(value)
@@ -55,7 +55,7 @@ namespace RISD.SuitsTelemetryClient.Data
 
     public class OxygenPressure : Pressure
     {
-        public override float Min => 750;
+        public override float Min => 0;
         public override float Max => 950;
 
         public OxygenPressure(float value) : base(value)
@@ -65,7 +65,7 @@ namespace RISD.SuitsTelemetryClient.Data
 
     public class SopPressure : Pressure
     {
-        public override float Min => 750;
+        public override float Min => 0;
         public override float Max => 950;
 
         public SopPressure(float value) : base(value)
@@ -75,7 +75,7 @@ namespace RISD.SuitsTelemetryClient.Data
 
     public class SubPressure : Pressure
     {
-        public override float Min => 2;
+        public override float Min => 0;
         public override float Max => 4;
 
         public SubPressure(float value) : base(value)
