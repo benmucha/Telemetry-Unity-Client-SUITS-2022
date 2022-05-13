@@ -99,7 +99,8 @@ public class RoomSimulationStateData
     /// Gas pressure from H2O system. Expected range is from 14 to 16 psia.
     /// </summary>
     [JsonProperty("p_h2o_g")]
-    public float H2OGasPressure { get; set; }
+    public float _h2OGasPressure { get; set; }
+    public H2OGasPressure H2OGasPressure => new H2OGasPressure(_h2OGasPressure);
 
     /// <summary>
     /// Liquid pressure from H2O system. Expected range is from 14 to 16 psia.
