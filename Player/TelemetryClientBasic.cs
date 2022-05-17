@@ -21,6 +21,7 @@ public class TelemetryClientBasic : MonoBehaviour
         //Debug.Log(config.ServerHostname);
         _telemetryReader = new TelemetryReader(config.ServerHostname, config.ServerPort, config.ShortpollingInterval);
         _telemetryReader.OnReceiveSimulationState += OnReceiveSimulationState;
+        _telemetryReader.OnReceiveLsar += OnReceiveLsar;
         _telemetryReader.OnApiError += OnApiError;
         _telemetryReader.OnGetRequest += OnApiGetRequest;
         _telemetryReader.StartReading();
@@ -30,12 +31,21 @@ public class TelemetryClientBasic : MonoBehaviour
     /// Callback for receiving data.
     /// </summary>
     /// <param name="simulationStateRoom"></param>
-    private static void OnReceiveSimulationState(RoomSimulationStateData simulationStateRoom)
+    private static void OnReceiveSimulationState(SimulationStateRoomData simulationStateRoom)
     {
-        Debug.Log($"output: {simulationStateRoom.ID} - {simulationStateRoom.WaterTimeLeft}");
+        Debug.Log($"simulation state: {simulationStateRoom.Id} - {simulationStateRoom.WaterTimeLeft}");
         Debug.Log($"test: " + simulationStateRoom.SubPressure.Percent);
     }
-    
+
+    /// <summary>
+    /// Callback for receiving data.
+    /// </summary>
+    /// <param name="simulationStateRoom"></param>
+    private static void OnReceiveLsar(LsarRoomData lsarRoom)
+    {
+        Debug.Log($"lsar: {lsarRoom.Id} - {lsarRoom.VmcText}");
+    }
+
     private static void OnApiError(Exception e)
     {
         Debug.LogException(e);
@@ -55,6 +65,7 @@ public class TelemetryClientBasic : MonoBehaviour
             return;
         
         _telemetryReader.OnReceiveSimulationState -= OnReceiveSimulationState;
+        _telemetryReader.OnReceiveLsar -= OnReceiveLsar;
         _telemetryReader.OnApiError -= OnApiError;
         _telemetryReader.StopReading();
     }

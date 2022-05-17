@@ -12,12 +12,12 @@ public class UserTest
 }
 
 /// <summary>
-/// <see cref="RoomSimulationStateData"/> from deserialized JSON.
+/// <see cref="SimulationStateRoomData"/> from deserialized JSON.
 /// </summary>
-public class RoomSimulationStateData
+public class SimulationStateRoomData
 {
     [JsonProperty("id")]
-    public int ID { get; set; }
+    public int Id { get; set; }
 
     [JsonProperty("room")]
     public int Room { get; set; }
