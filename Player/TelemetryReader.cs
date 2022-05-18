@@ -48,10 +48,10 @@ public class TelemetryReader
         remove => _apiClient.OnPostRequest -= value;
     }
     
-    public TelemetryReader(string hostname, int port, int roomId, int shortPollInterval)
+    public TelemetryReader(string hostname, int port, int targetRoomId, int shortPollInterval)
     {
         _shortPollInterval = shortPollInterval;
-        TargetRoomId = roomId;
+        TargetRoomId = targetRoomId;
         this._apiClient = new ApiClient(hostname, port);
     }
     
@@ -70,6 +70,12 @@ public class TelemetryReader
         
         _pollingCancellationSource = new CancellationTokenSource();
         ShortPollLoop(); // TaskCreationOptions.LongRunning
+    }
+
+    public async Task<List<UserData>> GetUsersInTargetRoom() => await GetUsersInRoom(TargetRoomId);
+    public async Task<List<UserData>> GetUsersInRoom(int roomId)
+    {
+        return await _apiClient.GetObject<List<UserData>>(GetApiAddressWithRoom("users", roomId));
     }
 
     /// <summary>

@@ -7,6 +7,7 @@ using UnityEngine;
 public class TelemetryClientBasic : MonoBehaviour
 {
     private TelemetryReader _telemetryReader;
+    private int UserId { get; set; }
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,7 @@ public class TelemetryClientBasic : MonoBehaviour
     /// Starts reading simulation state data.
     /// </summary>
     /// <param name="config"></param>
-    private void StartReader(Config config)
+    private async void StartReader(Config config)
     {
         //Debug.Log(config.ServerHostname);
         _telemetryReader = new TelemetryReader(config.ServerHostname, config.ServerPort, 1, config.ShortpollingInterval);
@@ -26,6 +27,9 @@ public class TelemetryClientBasic : MonoBehaviour
         _telemetryReader.OnReceiveLsar += OnReceiveLsar;
         _telemetryReader.OnApiError += OnApiError;
         _telemetryReader.OnGetRequest += OnApiGetRequest;
+        var users = await _telemetryReader.GetUsersInTargetRoom();
+        UserId = users.Last().Id;
+        Debug.Log("user id set: " + UserId);
         _telemetryReader.StartReading();
     }
 

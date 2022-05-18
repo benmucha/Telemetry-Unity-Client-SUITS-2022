@@ -32,8 +32,8 @@ public class ApiClient
     private async Task<HttpResponseMessage> PostReq(string apiAddress)
     {
         string url = GetApiUrl(apiAddress);
-        UserTest test = new UserTest();
-        string content = JsonConvert.SerializeObject(test);
+        UserInputModel inputModel = new UserInputModel(); // TODO take as parameter
+        string content = JsonConvert.SerializeObject(inputModel);
         OnPostRequest?.Invoke("POST", url, content);
         return await _httpClient.PostAsync(url, new StringContent(content, Encoding.UTF8, "application/json"));
     }

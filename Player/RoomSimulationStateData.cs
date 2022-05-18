@@ -2,13 +2,31 @@ using Newtonsoft.Json;
 using System;
 using RISD.SuitsTelemetryClient.Data;
 
-public class UserTest
+public class UserInputModel
 {
     [JsonProperty("username")]
     public string Username { get; set; }
     
     [JsonProperty("room")]
     public int Room { get; set; }
+}
+
+public class UserData
+{
+    [JsonProperty("id")]
+    public int Id { get; set; }
+
+    [JsonProperty("username")]
+    public string Username { get; set; }
+
+    [JsonProperty("room")]
+    public int Room { get; set; }
+
+    [JsonProperty("createdAt")]
+    public DateTimeOffset CreatedAt { get; set; }
+
+    [JsonProperty("updatedAt")]
+    public DateTimeOffset UpdatedAt { get; set; }
 }
 
 /// <summary>
