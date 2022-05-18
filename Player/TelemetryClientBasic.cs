@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using RISD.SuitsTelemetryClient.Data;
 using UnityEngine;
 
 public class TelemetryClientBasic : MonoBehaviour

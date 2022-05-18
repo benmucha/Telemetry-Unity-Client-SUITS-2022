@@ -13,7 +13,7 @@ public class LsarMessageData
     public int Room { get; set; }
 
     [JsonProperty("sender")]
-    public bool SenderId { get; set; }
+    public int SenderId { get; set; }
 
     [JsonProperty("isPaused")]
     public bool IsPaused { get; set; }
