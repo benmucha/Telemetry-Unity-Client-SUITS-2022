@@ -16,7 +16,7 @@ public class TelemetryReader
     /// </summary>
     public event ReceiveSimulationStateData OnReceiveSimulationState;
 
-    public delegate void ReceiveLsarData(LsarRoomData lsarRoom);
+    public delegate void ReceiveLsarData(List<LsarMessageData> lsarRoomData);
     /// <summary>
     /// Invoked when a SimulationState is received from the server.
     /// </summary>
@@ -82,8 +82,8 @@ public class TelemetryReader
     {
         try
         {
-            var lsar = await _apiClient.GetObject<List<LsarRoomData>>("lsar");
-            OnReceiveLsar?.Invoke(lsar.First());
+            var lsar = await _apiClient.GetObject<List<LsarMessageData>>("lsar");
+            OnReceiveLsar?.Invoke(lsar);
         }
         catch (Exception e)
         {

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using RISD.SuitsTelemetryClient.Data;
 using UnityEngine;
 
@@ -41,9 +43,10 @@ public class TelemetryClientBasic : MonoBehaviour
     /// Callback for receiving data.
     /// </summary>
     /// <param name="simulationStateRoom"></param>
-    private static void OnReceiveLsar(LsarRoomData lsarRoom)
+    private static void OnReceiveLsar(List<LsarMessageData> lsarMessage)
     {
-        Debug.Log($"lsar: {lsarRoom.Id} - {lsarRoom.VmcText}");
+        var firstMessage = lsarMessage.First();
+        Debug.Log($"lsar: {firstMessage?.Id} - {firstMessage?.VmcText}");
     }
 
     private static void OnApiError(Exception e)

@@ -2,9 +2,9 @@ using System;
 using Newtonsoft.Json;
 
 /// <summary>
-/// <see cref="LsarRoomData"/> from deserialized JSON.
+/// <see cref="LsarMessageData"/> from deserialized JSON.
 /// </summary>
-public class LsarRoomData
+public class LsarMessageData
 {
     [JsonProperty("id")]
     public int Id { get; set; }
