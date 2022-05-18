@@ -10,6 +10,8 @@ public class TelemetryReader
     private readonly ApiClient _apiClient;
     private CancellationTokenSource _pollingCancellationSource;
 
+    private int TargetRoomId { get; set; }
+
     public delegate void ReceiveSimulationStateData(SimulationStateRoomData simulationStateRoom);
     /// <summary>
     /// Invoked when a SimulationState is received from the server.
@@ -45,9 +47,10 @@ public class TelemetryReader
         remove => _apiClient.OnPostRequest -= value;
     }
     
-    public TelemetryReader(string hostname, int port, int shortPollInterval)
+    public TelemetryReader(string hostname, int port, int roomId, int shortPollInterval)
     {
         _shortPollInterval = shortPollInterval;
+        TargetRoomId = roomId;
         this._apiClient = new ApiClient(hostname, port);
     }
     
@@ -82,7 +85,7 @@ public class TelemetryReader
     {
         try
         {
-            var lsar = await _apiClient.GetObject<List<LsarMessageData>>("lsar");
+            var lsar = await _apiClient.GetObject<List<LsarMessageData>>(GetApiAddressWithTargetRoom("lsar"));
             OnReceiveLsar?.Invoke(lsar);
         }
         catch (Exception e)
@@ -95,8 +98,8 @@ public class TelemetryReader
     {
         try
         {
-            var simulationState = await _apiClient.GetObject<List<SimulationStateRoomData>>("simulationstate");
-            OnReceiveSimulationState?.Invoke(simulationState.First());
+            var simulationState = await _apiClient.GetObject<List<SimulationStateRoomData>>(GetApiAddressWithTargetRoom("simulationstate"));
+            OnReceiveSimulationState?.Invoke(simulationState.Count == 0 ? null : simulationState.First()); // Gets First because Telemetry JSON is always packed in an array even though it should only be one object per room.
         }
         catch (Exception e)
         {
@@ -109,4 +112,7 @@ public class TelemetryReader
         _pollingCancellationSource.Cancel();
         _pollingCancellationSource = null;
     }
+
+    private string GetApiAddressWithTargetRoom(string apiAddress) => GetApiAddressWithRoom(apiAddress, TargetRoomId);
+    private static string GetApiAddressWithRoom(string apiAddress, int roomId) => $"{apiAddress}/room/{roomId}";
 }

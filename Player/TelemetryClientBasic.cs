@@ -21,7 +21,7 @@ public class TelemetryClientBasic : MonoBehaviour
     private void StartReader(Config config)
     {
         //Debug.Log(config.ServerHostname);
-        _telemetryReader = new TelemetryReader(config.ServerHostname, config.ServerPort, config.ShortpollingInterval);
+        _telemetryReader = new TelemetryReader(config.ServerHostname, config.ServerPort, 100, config.ShortpollingInterval);
         _telemetryReader.OnReceiveSimulationState += OnReceiveSimulationState;
         _telemetryReader.OnReceiveLsar += OnReceiveLsar;
         _telemetryReader.OnApiError += OnApiError;
@@ -35,8 +35,15 @@ public class TelemetryClientBasic : MonoBehaviour
     /// <param name="simulationStateRoom"></param>
     private static void OnReceiveSimulationState(SimulationStateRoomData simulationStateRoom)
     {
-        Debug.Log($"simulation state: {simulationStateRoom.Id} - {simulationStateRoom.WaterTimeLeft}");
-        Debug.Log($"test: " + simulationStateRoom.SubPressure.Percent);
+        if (simulationStateRoom is null)
+        {
+            Debug.Log("simulation state is null");
+        }
+        else
+        {
+            Debug.Log($"simulation state: {simulationStateRoom.Id} - {simulationStateRoom.WaterTimeLeft}");
+            //Debug.Log($"test: " + simulationStateRoom.SubPressure.Percent);
+        }
     }
 
     /// <summary>
@@ -45,8 +52,15 @@ public class TelemetryClientBasic : MonoBehaviour
     /// <param name="simulationStateRoom"></param>
     private static void OnReceiveLsar(List<LsarMessageData> lsarMessage)
     {
-        var firstMessage = lsarMessage.First();
-        Debug.Log($"lsar: {firstMessage?.Id} - {firstMessage?.VmcText}");
+        if (lsarMessage.Count == 0)
+        {
+            Debug.Log("no lsar messages");
+        }
+        else
+        {
+            var firstMessage = lsarMessage.First();
+            Debug.Log($"lsar: {firstMessage.Id} - {firstMessage.VmcText}");
+        }
     }
 
     private static void OnApiError(Exception e)
