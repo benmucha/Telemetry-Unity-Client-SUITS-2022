@@ -32,6 +32,14 @@ public class TelemetryClientBasic : MonoBehaviour
         _telemetryReader.StartReading();
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _telemetryReader.PostMessageToTargetRoom("worked", UserId);
+        }
+    }
+
     /// <summary>
     /// Callback for receiving data.
     /// </summary>

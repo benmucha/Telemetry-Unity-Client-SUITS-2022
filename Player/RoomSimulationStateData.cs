@@ -29,6 +29,21 @@ public class UserData
     public DateTimeOffset UpdatedAt { get; set; }
 }
 
+public class LsarMessageInputModel
+{
+    [JsonProperty("sender")]
+    public int SenderId { get; set; }
+
+    [JsonProperty("room")]
+    public int RoomId { get; set; }
+
+    /// <summary>
+    /// 8 Character Message.
+    /// </summary>
+    [JsonProperty("vmc_txt")]
+    public string Message { get; set; }
+}
+
 /// <summary>
 /// <see cref="SimulationStateRoomData"/> from deserialized JSON.
 /// </summary>

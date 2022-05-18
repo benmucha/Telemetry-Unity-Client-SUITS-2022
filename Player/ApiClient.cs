@@ -29,11 +29,10 @@ public class ApiClient
         return await _httpClient.GetStringAsync(GetApiUrl(url));
     }
 
-    private async Task<HttpResponseMessage> PostReq(string apiAddress)
+    public async Task<HttpResponseMessage> PostReq<T>(string apiAddress, T bodyObject)
     {
         string url = GetApiUrl(apiAddress);
-        UserInputModel inputModel = new UserInputModel(); // TODO take as parameter
-        string content = JsonConvert.SerializeObject(inputModel);
+        string content = JsonConvert.SerializeObject(bodyObject);
         OnPostRequest?.Invoke("POST", url, content);
         return await _httpClient.PostAsync(url, new StringContent(content, Encoding.UTF8, "application/json"));
     }

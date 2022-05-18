@@ -56,6 +56,18 @@ public class TelemetryReader
     }
     
     //private static int ShortPollDelayMilliseconds(int tickRate) => (int)(1f / tickRate * 1000);
+
+    public async void PostMessageToTargetRoom(string message, int userId)
+    {
+        var messageInputModel = new LsarMessageInputModel()
+        {
+            SenderId = userId,
+            RoomId = TargetRoomId,
+            Message = message
+        };
+        await _apiClient.PostReq("lsar", messageInputModel);
+    }
+
     
     /// <summary>
     /// Starts reading from the API.
