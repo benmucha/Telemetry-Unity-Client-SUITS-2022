@@ -21,7 +21,7 @@ public class TelemetryClientBasic : MonoBehaviour
     private void StartReader(Config config)
     {
         //Debug.Log(config.ServerHostname);
-        _telemetryReader = new TelemetryReader(config.ServerHostname, config.ServerPort, 100, config.ShortpollingInterval);
+        _telemetryReader = new TelemetryReader(config.ServerHostname, config.ServerPort, 1, config.ShortpollingInterval);
         _telemetryReader.OnReceiveSimulationState += OnReceiveSimulationState;
         _telemetryReader.OnReceiveLsar += OnReceiveLsar;
         _telemetryReader.OnApiError += OnApiError;

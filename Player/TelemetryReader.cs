@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using UnityEngine;
 
 public class TelemetryReader
 {
@@ -77,8 +78,16 @@ public class TelemetryReader
     private async void ShortPollLoop()
     {
         CancellationToken cancellationToken = _pollingCancellationSource.Token;
-        while (!cancellationToken.IsCancellationRequested)
-            await Task.WhenAll(PollSimulationStateStep(), PollLsarStep(), Task.Delay(_shortPollInterval, cancellationToken));
+        try
+        {
+            while (!cancellationToken.IsCancellationRequested)
+                await Task.WhenAll(PollSimulationStateStep(), PollLsarStep(),
+                    Task.Delay(_shortPollInterval, cancellationToken));
+        }
+        catch (TaskCanceledException)
+        {
+            Debug.Log("Stopped polling");
+        }
     }
 
     private async Task PollLsarStep()
