@@ -23,6 +23,7 @@ public class TelemetryClientBasic : MonoBehaviour
         //Debug.Log(config.ServerHostname);
         _telemetryReader = new TelemetryReader(config.ServerHostname, config.ServerPort, 1, config.ShortpollingInterval);
         _telemetryReader.OnReceiveSimulationState += OnReceiveSimulationState;
+        _telemetryReader.OnReceiveLocations += OnReceiveLocations;
         _telemetryReader.OnReceiveLsar += OnReceiveLsar;
         _telemetryReader.OnApiError += OnApiError;
         _telemetryReader.OnGetRequest += OnApiGetRequest;
@@ -43,7 +44,22 @@ public class TelemetryClientBasic : MonoBehaviour
     /// <summary>
     /// Callback for receiving data.
     /// </summary>
-    /// <param name="simulationStateRoom"></param>
+    private static void OnReceiveLocations(List<LocationData> locations)
+    {
+        if (locations.Count == 0)
+        {
+            Debug.Log("no locations");
+        }
+        else
+        {
+            var firstLocation = locations.First();
+            Debug.Log($"location: {firstLocation.Id} - {firstLocation.UserId}");
+        }
+    }
+
+    /// <summary>
+    /// Callback for receiving data.
+    /// </summary>
     private static void OnReceiveSimulationState(SimulationStateRoomData simulationStateRoom)
     {
         if (simulationStateRoom is null)
@@ -60,7 +76,6 @@ public class TelemetryClientBasic : MonoBehaviour
     /// <summary>
     /// Callback for receiving data.
     /// </summary>
-    /// <param name="simulationStateRoom"></param>
     private static void OnReceiveLsar(List<LsarMessageData> lsarMessage)
     {
         if (lsarMessage.Count == 0)

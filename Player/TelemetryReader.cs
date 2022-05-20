@@ -19,9 +19,15 @@ public class TelemetryReader
     /// </summary>
     public event ReceiveSimulationStateData OnReceiveSimulationState;
 
+    public delegate void ReceiveLocationsData(List<LocationData> locationsData);
+    /// <summary>
+    /// Invoked when Locations are received from the server.
+    /// </summary>
+    public event ReceiveLocationsData OnReceiveLocations;
+
     public delegate void ReceiveLsarData(List<LsarMessageData> lsarRoomData);
     /// <summary>
-    /// Invoked when a SimulationState is received from the server.
+    /// Invoked when LSAR messages are received from the server.
     /// </summary>
     public event ReceiveLsarData OnReceiveLsar;
 
@@ -99,7 +105,7 @@ public class TelemetryReader
         try
         {
             while (!cancellationToken.IsCancellationRequested)
-                await Task.WhenAll(PollSimulationStateStep(), PollLsarStep(),
+                await Task.WhenAll(PollSimulationStateStep(), PollLocationsStep(), PollLsarStep(),
                     Task.Delay(_shortPollInterval, cancellationToken));
         }
         catch (TaskCanceledException)
@@ -127,6 +133,19 @@ public class TelemetryReader
         {
             var simulationState = await _apiClient.GetObject<List<SimulationStateRoomData>>(GetApiAddressWithTargetRoom("simulationstate"));
             OnReceiveSimulationState?.Invoke(simulationState.Count == 0 ? null : simulationState.First()); // Gets First because Telemetry JSON is always packed in an array even though it should only be one object per room.
+        }
+        catch (Exception e)
+        {
+            OnApiError?.Invoke(e);
+        }
+    }
+
+    private async Task PollLocationsStep()
+    {
+        try
+        {
+            var locations = await _apiClient.GetObject<List<LocationData>>(GetApiAddressWithTargetRoom("locations"));
+            OnReceiveLocations?.Invoke(locations); // Gets First because Telemetry JSON is always packed in an array even though it should only be one object per room.
         }
         catch (Exception e)
         {
