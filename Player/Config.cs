@@ -9,6 +9,7 @@ public class Config
 {
     public string ServerHostname { get; }
     public int ServerPort { get; }
+    public int TargetRoomId { get; }
 
     public int ShortpollingInterval { get; }
 
@@ -42,6 +43,7 @@ public class Config
             ServerHostname = GetNodeText("server/hostname");
             ServerPort = int.Parse(GetNodeText("server/port"));
             ShortpollingInterval = int.Parse(GetNodeText("shortpollingInterval"));
+            TargetRoomId = int.Parse(GetNodeText("targetRoomId"));
             string GetNodeText(string node) => doc.DocumentElement.SelectSingleNode(node).InnerText;
         }
         catch (Exception e)
@@ -53,5 +55,13 @@ public class Config
     public static Config LoadConfig()
     {
         return new Config(Path.Combine(Application.streamingAssetsPath, ConfigFileName));
+    }
+
+    public override string ToString()
+    {
+        return "TelemetryClient Config:\n" +
+               $"Server: {ServerHostname}:{ServerPort}\n" +
+               $"Short-polling Interval: {ShortpollingInterval}ms\n" +
+               $"Target Room Number: {TargetRoomId}";
     }
 }

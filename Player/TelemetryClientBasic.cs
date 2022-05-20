@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Example TelemetryClient script for implementing the Unity TelemetryClient package.
+/// </summary>
 public class TelemetryClientBasic : MonoBehaviour
 {
     private TelemetryReader _telemetryReader;
@@ -20,8 +23,8 @@ public class TelemetryClientBasic : MonoBehaviour
     /// <param name="config"></param>
     private async void StartReader(Config config)
     {
-        //Debug.Log(config.ServerHostname);
-        _telemetryReader = new TelemetryReader(config.ServerHostname, config.ServerPort, 1, config.ShortpollingInterval);
+        Debug.Log("Starting Example TelemetryClient with config:\n" + config);
+        _telemetryReader = new TelemetryReader(config.ServerHostname, config.ServerPort, config.TargetRoomId, config.ShortpollingInterval);
         _telemetryReader.OnReceiveSimulationState += OnReceiveSimulationState;
         _telemetryReader.OnReceiveLocations += OnReceiveLocations;
         _telemetryReader.OnReceiveLsar += OnReceiveLsar;
