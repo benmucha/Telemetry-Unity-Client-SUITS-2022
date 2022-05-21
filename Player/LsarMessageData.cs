@@ -9,7 +9,7 @@ public class LsarMessageData
 {
     [Preserve]
     [JsonConstructor]
-    public LsarMessageData(bool fake_arg)
+    public LsarMessageData()
     {
         // fake_arg is to have a unique ctor that we exclusively
         // use in JSON de-serialization via JsonConstructor attribute.

@@ -9,7 +9,7 @@ public class LocationData
 {
     [Preserve]
     [JsonConstructor]
-    public LocationData(bool fake_arg)
+    public LocationData()
     {
         // fake_arg is to have a unique ctor that we exclusively
         // use in JSON de-serialization via JsonConstructor attribute.
