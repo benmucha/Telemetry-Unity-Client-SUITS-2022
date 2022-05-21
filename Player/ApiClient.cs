@@ -1,8 +1,8 @@
-using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 public class ApiClient
 {
@@ -19,20 +19,23 @@ public class ApiClient
         this._baseApiUri = new Uri($"http://{hostname}:{port.ToString()}/api/");
         this._httpClient = new HttpClient();
     }
-    
-    public async Task<T> GetObject<T>(string apiAddress) => JsonConvert.DeserializeObject<T>(await GetReq(apiAddress));
+
+    public async Task<T> GetObject<T>(string wrapperFormat, string apiAddress) =>
+        JsonUtility.FromJson<T>(string.Format(wrapperFormat, await GetReq(apiAddress)));
 
     private async Task<string> GetReq(string apiAddress)
     {
         string url = GetApiUrl(apiAddress);
         OnGetRequest?.Invoke("GET", url);
-        return await _httpClient.GetStringAsync(GetApiUrl(url));
+        string result = await _httpClient.GetStringAsync(GetApiUrl(url));
+        Debug.Log("getreq result: " + result);
+        return result;
     }
 
     public async Task<HttpResponseMessage> PostReq<T>(string apiAddress, T bodyObject)
     {
         string url = GetApiUrl(apiAddress);
-        string content = JsonConvert.SerializeObject(bodyObject);
+        string content = JsonUtility.ToJson(bodyObject);
         OnPostRequest?.Invoke("POST", url, content);
         return await _httpClient.PostAsync(url, new StringContent(content, Encoding.UTF8, "application/json"));
     }

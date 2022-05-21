@@ -19,13 +19,13 @@ public class TelemetryReader
     /// </summary>
     public event ReceiveSimulationStateData OnReceiveSimulationState;
 
-    public delegate void ReceiveLocationsData(List<LocationData> locationsData);
+    public delegate void ReceiveLocationsData(LocationsList locationsData);
     /// <summary>
     /// Invoked when Locations are received from the server.
     /// </summary>
     public event ReceiveLocationsData OnReceiveLocations;
 
-    public delegate void ReceiveLsarData(List<LsarMessageData> lsarRoomData);
+    public delegate void ReceiveLsarData(LsarMessagesList lsarRoomData);
     /// <summary>
     /// Invoked when LSAR messages are received from the server.
     /// </summary>
@@ -90,10 +90,10 @@ public class TelemetryReader
         ShortPollLoop(); // TaskCreationOptions.LongRunning
     }
 
-    public async Task<List<UserData>> GetUsersInTargetRoom() => await GetUsersInRoom(TargetRoomId);
-    public async Task<List<UserData>> GetUsersInRoom(int roomId)
+    public async Task<UsersList> GetUsersInTargetRoom() => await GetUsersInRoom(TargetRoomId);
+    public async Task<UsersList> GetUsersInRoom(int roomId)
     {
-        return await _apiClient.GetObject<List<UserData>>(GetApiAddressWithRoom("users", roomId));
+        return await _apiClient.GetObject<UsersList>(UsersList.FormattedJsonStringWrapper, GetApiAddressWithRoom("users", roomId));
     }
 
     /// <summary>
@@ -118,7 +118,7 @@ public class TelemetryReader
     {
         try
         {
-            var lsar = await _apiClient.GetObject<List<LsarMessageData>>(GetApiAddressWithTargetRoom("lsar"));
+            var lsar = await _apiClient.GetObject<LsarMessagesList>(LsarMessagesList.FormattedJsonStringWrapper, GetApiAddressWithTargetRoom("lsar"));
             OnReceiveLsar?.Invoke(lsar);
         }
         catch (Exception e)
@@ -131,8 +131,8 @@ public class TelemetryReader
     {
         try
         {
-            var simulationState = await _apiClient.GetObject<List<SimulationStateRoomData>>(GetApiAddressWithTargetRoom("simulationstate"));
-            OnReceiveSimulationState?.Invoke(simulationState.Count == 0 ? null : simulationState.First()); // Gets First because Telemetry JSON is always packed in an array even though it should only be one object per room.
+            var simulationState = await _apiClient.GetObject<SimulationStateList>(SimulationStateList.FormattedJsonStringWrapper, GetApiAddressWithTargetRoom("simulationstate"));
+            OnReceiveSimulationState?.Invoke(simulationState.list.Length == 0 ? null : simulationState.list.First()); // Gets First because Telemetry JSON is always packed in an array even though it should only be one object per room.
         }
         catch (Exception e)
         {
@@ -144,7 +144,7 @@ public class TelemetryReader
     {
         try
         {
-            var locations = await _apiClient.GetObject<List<LocationData>>(GetApiAddressWithTargetRoom("locations"));
+            var locations = await _apiClient.GetObject<LocationsList>(LocationsList.FormattedJsonStringWrapper, GetApiAddressWithTargetRoom("locations"));
             OnReceiveLocations?.Invoke(locations); // Gets First because Telemetry JSON is always packed in an array even though it should only be one object per room.
         }
         catch (Exception e)

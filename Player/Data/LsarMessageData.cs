@@ -1,5 +1,13 @@
 using System;
 
+[Serializable]
+public class LsarMessagesList
+{
+    public LsarMessageData[] list;
+
+    public static string FormattedJsonStringWrapper => "{{\"list\":{0}}}";
+}
+
 /// <summary>
 /// <see cref="LsarMessageData"/> from deserialized JSON.
 /// </summary>
