@@ -21,11 +21,7 @@ public class Config
         XmlDocument doc = new XmlDocument();
         if (!File.Exists(configFilePath))
         {
-            Debug.Log("Config not found, setting to default.");
-            string defaultConfigText = ((TextAsset) Resources.Load(DefaultConfigFileName)).text;
-            Directory.CreateDirectory (Application.streamingAssetsPath);
-            File.WriteAllText(configFilePath, defaultConfigText);
-            AssetDatabase.Refresh();
+            throw new FileNotFoundException(configFilePath);
         }
 
         try
