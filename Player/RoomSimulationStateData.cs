@@ -1,9 +1,20 @@
 using Newtonsoft.Json;
 using System;
 using RISD.SuitsTelemetryClient.Data;
+using UnityEngine.Scripting;
 
 public class UserInputModel
 {
+    [Preserve]
+    [JsonConstructor]
+    public UserInputModel()
+    {
+        // fake_arg is to have a unique ctor that we exclusively
+        // use in JSON de-serialization via JsonConstructor attribute.
+        // Preserve attribute ensures Xamarin linker does not remove,
+        // as there are no direct uses of this ctor in the code base
+    }
+
     [JsonProperty("username")]
     public string Username { get; set; }
     
@@ -13,6 +24,16 @@ public class UserInputModel
 
 public class UserData
 {
+    [Preserve]
+    [JsonConstructor]
+    public UserData(bool fake_arg)
+    {
+        // fake_arg is to have a unique ctor that we exclusively
+        // use in JSON de-serialization via JsonConstructor attribute.
+        // Preserve attribute ensures Xamarin linker does not remove,
+        // as there are no direct uses of this ctor in the code base
+    }
+
     [JsonProperty("id")]
     public int Id { get; set; }
 
@@ -31,6 +52,16 @@ public class UserData
 
 public class LsarMessageInputModel
 {
+    [Preserve]
+    [JsonConstructor]
+    public LsarMessageInputModel()
+    {
+        // fake_arg is to have a unique ctor that we exclusively
+        // use in JSON de-serialization via JsonConstructor attribute.
+        // Preserve attribute ensures Xamarin linker does not remove,
+        // as there are no direct uses of this ctor in the code base
+    }
+
     [JsonProperty("sender")]
     public int SenderId { get; set; }
 
@@ -49,6 +80,16 @@ public class LsarMessageInputModel
 /// </summary>
 public class SimulationStateRoomData
 {
+    [Preserve]
+    [JsonConstructor]
+    public SimulationStateRoomData(bool fake_arg)
+    {
+        // fake_arg is to have a unique ctor that we exclusively
+        // use in JSON de-serialization via JsonConstructor attribute.
+        // Preserve attribute ensures Xamarin linker does not remove,
+        // as there are no direct uses of this ctor in the code base
+    }
+
     [JsonProperty("id")]
     public int Id { get; set; }
 

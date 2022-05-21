@@ -1,11 +1,22 @@
 using System;
 using Newtonsoft.Json;
+using UnityEngine.Scripting;
 
 /// <summary>
 /// <see cref="LsarMessageData"/> from deserialized JSON.
 /// </summary>
 public class LsarMessageData
 {
+    [Preserve]
+    [JsonConstructor]
+    public LsarMessageData(bool fake_arg)
+    {
+        // fake_arg is to have a unique ctor that we exclusively
+        // use in JSON de-serialization via JsonConstructor attribute.
+        // Preserve attribute ensures Xamarin linker does not remove,
+        // as there are no direct uses of this ctor in the code base
+    }
+
     [JsonProperty("id")]
     public int Id { get; set; }
 
