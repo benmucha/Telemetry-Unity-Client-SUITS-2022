@@ -14,43 +14,43 @@ public class LsarMessagesList
 [Serializable]
 public class LsarMessageData
 {
-    public int id { get; set; }
+    public int id;
 
-    public int room { get; set; }
+    public int room;
 
-    public int sender { get; set; }
+    public int sender;
 
-    public bool isPaused { get; set; }
+    public bool isPaused;
 
-    public string time { get; set; }
+    public string time;
 
-    public string priority_tag { get; set; }
+    public string priority_tag;
 
-    public string encoded_lat { get; set; }
+    public string encoded_lat;
 
-    public string encoded_lon { get; set; }
+    public string encoded_lon;
 
-    public string pnt_source { get; set; }
+    public string pnt_source;
 
-    public string condition_state { get; set; }
+    public string condition_state;
 
-    public string vmc_txt { get; set; }
+    public string vmc_txt;
 
-    public string tac_sn { get; set; }
+    public string tac_sn;
 
-    public string cntry_code { get; set; }
+    public string cntry_code;
 
-    public string homing_dvc_stat { get; set; }
+    public string homing_dvc_stat;
 
-    public string ret_lnk_stat { get; set; }
+    public string ret_lnk_stat;
 
-    public string test_pronto { get; set; }
+    public string test_pronto;
 
-    public string vessel_id { get; set; }
+    public string vessel_id;
 
-    public string beacon_type { get; set; }
+    public string beacon_type;
 
-    public DateTimeOffset createdAt { get; set; }
+    public DateTimeOffset createdAt;
 
-    public DateTimeOffset updatedAt { get; set; }
+    public DateTimeOffset updatedAt;
 }
