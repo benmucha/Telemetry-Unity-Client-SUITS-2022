@@ -28,7 +28,7 @@ public class ApiClient
         string url = GetApiUrl(apiAddress);
         OnGetRequest?.Invoke("GET", url);
         string result = await _httpClient.GetStringAsync(GetApiUrl(url));
-        Debug.Log("getreq result: " + result);
+        //Debug.Log("GetReq result: " + result);
         return result;
     }
 
