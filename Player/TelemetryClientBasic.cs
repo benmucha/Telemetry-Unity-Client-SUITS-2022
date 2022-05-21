@@ -31,7 +31,7 @@ public class TelemetryClientBasic : MonoBehaviour
         _telemetryReader.OnApiError += OnApiError;
         _telemetryReader.OnGetRequest += OnApiGetRequest;
         var users = await _telemetryReader.GetUsersInTargetRoom();
-        UserId = users.Last().Id;
+        UserId = users.Last().id;
         Debug.Log("user id set: " + UserId);
         _telemetryReader.StartReading();
     }
@@ -56,7 +56,7 @@ public class TelemetryClientBasic : MonoBehaviour
         else
         {
             var firstLocation = locations.First();
-            Debug.Log($"location: {firstLocation.Id} - {firstLocation.UserId}");
+            Debug.Log($"location: {firstLocation.id} - {firstLocation.user}");
         }
     }
 
@@ -71,7 +71,7 @@ public class TelemetryClientBasic : MonoBehaviour
         }
         else
         {
-            Debug.Log($"simulation state: {simulationStateRoom.Id} - {simulationStateRoom.WaterTimeLeft}");
+            Debug.Log($"simulation state: {simulationStateRoom.id} - {simulationStateRoom.t_water}");
             //Debug.Log($"test: " + simulationStateRoom.SubPressure.Percent);
         }
     }
@@ -88,7 +88,7 @@ public class TelemetryClientBasic : MonoBehaviour
         else
         {
             var firstMessage = lsarMessage.First();
-            Debug.Log($"lsar: {firstMessage.Id} - {firstMessage.VmcText}");
+            Debug.Log($"lsar: {firstMessage.id} - {firstMessage.vmc_txt}");
         }
     }
 

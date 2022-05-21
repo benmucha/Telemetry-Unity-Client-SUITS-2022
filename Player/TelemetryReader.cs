@@ -67,9 +67,9 @@ public class TelemetryReader
     {
         var messageInputModel = new LsarMessageInputModel()
         {
-            SenderId = userId,
-            RoomId = TargetRoomId,
-            Message = message
+            sender = userId,
+            room = TargetRoomId,
+            vmc_txt = message
         };
         await _apiClient.PostReq("lsar", messageInputModel);
     }

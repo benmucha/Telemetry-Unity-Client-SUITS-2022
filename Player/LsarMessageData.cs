@@ -1,79 +1,48 @@
 using System;
-using Newtonsoft.Json;
-using UnityEngine.Scripting;
 
 /// <summary>
 /// <see cref="LsarMessageData"/> from deserialized JSON.
 /// </summary>
+[Serializable]
 public class LsarMessageData
 {
-    [Preserve]
-    [JsonConstructor]
-    public LsarMessageData()
-    {
-        // fake_arg is to have a unique ctor that we exclusively
-        // use in JSON de-serialization via JsonConstructor attribute.
-        // Preserve attribute ensures Xamarin linker does not remove,
-        // as there are no direct uses of this ctor in the code base
-    }
+    public int id { get; set; }
 
-    [JsonProperty("id")]
-    public int Id { get; set; }
+    public int room { get; set; }
 
-    [JsonProperty("room")]
-    public int Room { get; set; }
+    public int sender { get; set; }
 
-    [JsonProperty("sender")]
-    public int SenderId { get; set; }
+    public bool isPaused { get; set; }
 
-    [JsonProperty("isPaused")]
-    public bool IsPaused { get; set; }
+    public string time { get; set; }
 
-    [JsonProperty("time")]
-    public string Time { get; set; }
+    public string priority_tag { get; set; }
 
-    [JsonProperty("priority_tag")]
-    public string PriorityTag { get; set; }
+    public string encoded_lat { get; set; }
 
-    [JsonProperty("encoded_lat")]
-    public string EncodedLatitude { get; set; }
+    public string encoded_lon { get; set; }
 
-    [JsonProperty("encoded_lon")]
-    public string EncodedLongitude { get; set; }
+    public string pnt_source { get; set; }
 
-    [JsonProperty("pnt_source")]
-    public string PntSource { get; set; }
+    public string condition_state { get; set; }
 
-    [JsonProperty("condition_state")]
-    public string ConditionState { get; set; }
+    public string vmc_txt { get; set; }
 
-    [JsonProperty("vmc_txt")]
-    public string VmcText { get; set; }
+    public string tac_sn { get; set; }
 
-    [JsonProperty("tac_sn")]
-    public string TacSn { get; set; }
+    public string cntry_code { get; set; }
 
-    [JsonProperty("cntry_code")]
-    public string CountryCode { get; set; }
+    public string homing_dvc_stat { get; set; }
 
-    [JsonProperty("homing_dvc_stat")]
-    public string HomingDvcStat { get; set; }
+    public string ret_lnk_stat { get; set; }
 
-    [JsonProperty("ret_lnk_stat")]
-    public string RetLnkStat { get; set; }
+    public string test_pronto { get; set; }
 
-    [JsonProperty("test_pronto")]
-    public string TestPronto { get; set; }
+    public string vessel_id { get; set; }
 
-    [JsonProperty("vessel_id")]
-    public string VesselId { get; set; }
+    public string beacon_type { get; set; }
 
-    [JsonProperty("beacon_type")]
-    public string BeaconType { get; set; }
+    public DateTimeOffset createdAt { get; set; }
 
-    [JsonProperty("createdAt")]
-    public DateTimeOffset CreatedAt { get; set; }
-
-    [JsonProperty("updatedAt")]
-    public DateTimeOffset UpdatedAt { get; set; }
+    public DateTimeOffset updatedAt { get; set; }
 }
